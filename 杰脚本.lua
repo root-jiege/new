@@ -18,12 +18,23 @@ local REN ={
             ["状态"] = false;
             ["用户名"] = {
                 "jg_nb4",
+                "10",
             };
         };
         ["普通白名单"] = {
            ["状态"] = false;
            ["用户名"] = {
-                "baby520ba1",
+                "baby520ba1"",
+                "1",
+                "2",
+                "3",
+                
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
            };
         };
     };
@@ -102,7 +113,7 @@ Start = tick()
 Heartbeat:Connect(HeartbeatUpdate)
 --local ui = loadstring(game:HttpGet"https://pastebin.com/raw/cApeA3dS")()
 local ui = loadstring(game:HttpGet"https://pastebin.com/raw/E9PzvbeX")()
-local win = ui:new("杰脚本")
+local win = ui:new("杰")
 --
 local UITab1 = win:Tab("『信息』",'6035145364')
 --
@@ -173,7 +184,7 @@ local Tab = Tab1:section("脚本中心",true)
 local music = music1:section("音乐",true)
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --local RENqd = game:HttpGet("https://wss.wigwy.xyz")
-UITab:Label("杰脚本交流群：230930606")
+UITab:Label("杰脚本交流群：719409149")
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -189,7 +200,7 @@ ca.TextSize=22;da.Parent=ca
 da.BackgroundColor3=Color3.new(0.196078,0.196078,0.196078)da.Position=UDim2.new(0,0,1.0192306,0)
 da.Size=UDim2.new(0,304,0,107)_b.Parent=da
 _b.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471)_b.Position=UDim2.new(0,0,0.800455689,0)
-_b.Size=UDim2.new(0,304,0,21)_b.Font=Enum.Font.Arial;_b.Text="杰哥工作室"
+_b.Size=UDim2.new(0,304,0,21)_b.Font=Enum.Font.Arial;_b.Text="杰工作室"
 _b.TextColor3=Color3.new(1,1,1)_b.TextSize=20;ab.Parent=da
 ab.BackgroundColor3=Color3.new(0.176471,0.176471,0.176471)ab.Position=UDim2.new(0,0,0.158377379,0)
 ab.Size=UDim2.new(0,304,0,44)ab.Font=Enum.Font.ArialBold;ab.Text="状态：脚本开始"
