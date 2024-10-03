@@ -1,0 +1,86 @@
+LocalPlayer = game:GetService("Players").LocalPlayer
+Camera = workspace.CurrentCamera
+RunService = game:GetService("RunService")
+VirtualUser = game:GetService("VirtualUser")
+MarketplaceService = game:GetService("MarketplaceService")
+
+function GetCurrentVehicle()
+    return LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") and LocalPlayer.Character.Humanoid.SeatPart and LocalPlayer.Character.Humanoid.SeatPart.Parent
+end
+
+MT = getrawmetatable(game)
+Old_Index = MT.__index
+setreadonly(MT, false)
+MT.__index = newcclosure(function(self, K)
+    if self:IsA("Sound") and self:IsDescendantOf(workspace.SessionVehicles) and AntiSkidMarkSounds then
+        self:Stop()
+        return
+    end
+    return Old_Index(self, K)
+end)
+setreadonly(MT, true)
+
+function TP(cframe)
+    GetCurrentVehicle():SetPrimaryPartCFrame(cframe)
+end
+
+function VelocityTP(cframe)
+    TeleportSpeed = 500
+    Car = GetCurrentVehicle()
+    for I,V in pairs(GetCurrentVehicle():GetDescendants()) do
+        if V:IsA("BodyGyro") then
+            V:Destroy()
+        end
+    end
+    local BodyGyro = Instance.new("BodyGyro", Car.PrimaryPart)
+    BodyGyro.P = 5000
+    BodyGyro.maxTorque = Vector3.new(9e9, 9e9, 9e9)
+    BodyGyro.CFrame = Car.PrimaryPart.CFrame
+    local BodyVelocity = Instance.new("BodyVelocity", Car.PrimaryPart)
+    BodyVelocity.MaxForce = Vector3.new(9e9, 9e9, 9e9)
+    BodyVelocity.Velocity = CFrame.new(Car.PrimaryPart.Position, cframe.p).LookVector * TeleportSpeed
+    wait((Car.PrimaryPart.Position - cframe.p).Magnitude / TeleportSpeed)
+    BodyVelocity.Velocity = Vector3.new()
+    wait(0.1)
+    BodyVelocity:Destroy()
+    BodyGyro:Destroy()
+end
+
+StartPosition = CFrame.new(Vector3.new(-1818, -79, -10685), Vector3.new(-880, -79, -10769))
+EndPosition = CFrame.new(Vector3.new(-965, -79, -10761), Vector3.new(-880, -79, -10769))
+AutoFarmFunc = coroutine.create(function()
+    while wait() do
+        if not AutoFarm then
+            AutoFarmRunning = false
+            coroutine.yield()
+        end
+        AutoFarmRunning = true
+        pcall(function()
+            if not GetCurrentVehicle() and tick() - (LastNotif or 0) > 5 then
+                LastNotif = tick()
+                SendNotification("Aloha Scripts", "Please Enter A Vehicle!")
+            else
+                TP(StartPosition + (TouchTheRoad and Vector3.new() or Vector3.new(0, 1, 0)))
+                VelocityTP(EndPosition + (TouchTheRoad and Vector3.new() or Vector3.new(0, 1, 0)))
+                TP(EndPosition + (TouchTheRoad and Vector3.new() or Vector3.new(0, 1, 0)))
+                VelocityTP(StartPosition + (TouchTheRoad and Vector3.new() or Vector3.new(0, 1, 0)))
+            end
+        end)
+    end
+end)
+local ui = loadstring(game:HttpGet("https://raw.githubusercontent.com/dingding123hhh/hun/main/jmlibrary1.lua"))();        
+local win = ui:new("冷脚本")
+--
+local UITab = win:Tab("『信息』",'2368002365')
+
+local tab = UITab:section("『作者信息』",false)
+tab:Toggle("自动驾驶", "Toggle flag", false, function(value)
+    AutoFarm = value
+    if value and not AutoFarmRunning then
+        coroutine.resume(AutoFarmFunc)
+    end
+end)
+
+tab:Toggle("触摸地面", "Toggle flag", false, function(value)
+    TouchTheRoad = value
+end)
